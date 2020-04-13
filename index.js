@@ -45,7 +45,7 @@ client.on("message", async (message) => {
         return latest;
       } catch (err) {
         msg.edit(
-          `Enter a real country, you cunt! or... there are no cases in ${country}`
+          `Country is not recognized! or... there are no cases in ${country}`
         );
       }
     };
