@@ -2,4 +2,7 @@
 
 This project was built using NodeJS and Discord.js
 
-Data: https://github.com/pomber/covid19/ , https://raw.githubusercontent.com/pomber/covid19/master/docs/timeseries.json
+Data used: https://github.com/pomber/covid19/, https://raw.githubusercontent.com/pomber/covid19/master/docs/timeseries.json
+
+
+![In Action](https://i.imgur.com/GP7ROGj.png)
