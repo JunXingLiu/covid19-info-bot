@@ -47,6 +47,7 @@ client.on("message", async (message) => {
         msg.edit(
           `Country is not recognized! or... there are no cases in ${country}`
         );
+        return false;
       }
     };
 
