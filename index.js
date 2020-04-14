@@ -49,10 +49,15 @@ client.on("message", async (message) => {
         );
       }
     };
-    let { date, confirmed, deaths, recovered } = await getCovidData();
-    msg.edit(
-      `${country}: As of ${date}\nConfirmed: ${confirmed}\nDeaths: ${deaths}\nRecovered: ${recovered}`
-    );
+
+    try {
+      let { date, confirmed, deaths, recovered } = await getCovidData();
+      msg.edit(
+        `${country}: As of ${date}\nConfirmed: ${confirmed}\nDeaths: ${deaths}\nRecovered: ${recovered}`
+      );
+    } catch (err) {
+      msg.edit("Data could not be retrieved");
+    }
   }
 });
 
