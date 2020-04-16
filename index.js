@@ -50,14 +50,16 @@ client.on("message", async (message) => {
         return false;
       }
     };
-
-    try {
-      let { date, confirmed, deaths, recovered } = await getCovidData();
+    let { date, confirmed, deaths, recovered } = await getCovidData();
+    if (
+      date !== undefined &&
+      confirmed !== undefined &&
+      deaths !== undefined &&
+      recovered !== undefined
+    ) {
       msg.edit(
         `${country}: As of ${date}\nConfirmed: ${confirmed}\nDeaths: ${deaths}\nRecovered: ${recovered}`
       );
-    } catch (err) {
-      msg.edit("Data could not be retrieved");
     }
   }
 });
