@@ -3,6 +3,7 @@ const { config } = require("dotenv");
 const axios = require("axios");
 
 const endPoint = "https://pomber.github.io/covid19/timeseries.json";
+const jokeEndPoint = "https://icanhazdadjoke.com/slack";
 
 const client = new Client({
   disableEveryone: true,
@@ -68,6 +69,18 @@ client.on("message", async (message) => {
         `${country}: As of ${date}\nConfirmed: ${confirmed}\nDeaths: ${deaths}\nRecovered: ${recovered}`
       );
     }
+  } else if (cmd === "joke") {
+    const msg = await message.channel.send("Joke Incoming...");
+    const header = {
+      "Content-Type": "application/json",
+      "User-Agent": "My Library (https://github.com/JunXingLiu/)",
+    };
+    let getJoke = async () => {
+      let response = await axios.get(jokeEndPoint, { headers: header });
+      return response.data.attachments[0].fallback;
+    };
+    let joke = await getJoke();
+    message.channel.send(joke, { tts: true });
   }
 });
 
