@@ -32,15 +32,22 @@ client.on("message", async (message) => {
   if (!message.content.startsWith(prefix)) return;
 
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
-  const country = args[1].charAt(0).toUpperCase() + args[1].slice(1);
   const cmd = args.shift().toLocaleLowerCase();
 
   if (cmd === "covid19") {
     const msg = await message.channel.send("Searching");
+    let country = args.join(" ");
     let getCovidData = async () => {
       try {
-        let reponse = await axios.get(endPoint);
-        let allCovidData = reponse.data[country];
+        let response = await axios.get(endPoint);
+        let allCountryKeys = Object.keys(response.data);
+        for (i = 0; i < allCountryKeys.length; i++) {
+          if (allCountryKeys[i].toLowerCase().includes(country.toLowerCase())) {
+            country = allCountryKeys[i];
+            break;
+          }
+        }
+        let allCovidData = response.data[country];
         let latest = allCovidData[allCovidData.length - 1];
         return latest;
       } catch (err) {
