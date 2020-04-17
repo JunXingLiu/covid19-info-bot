@@ -42,7 +42,7 @@ client.on("message", async (message) => {
         let response = await axios.get(endPoint);
         let allCountryKeys = Object.keys(response.data);
         for (i = 0; i < allCountryKeys.length; i++) {
-          if (allCountryKeys[i].toLowerCase().includes(country.toLowerCase())) {
+          if (allCountryKeys[i].toLowerCase() === country.toLowerCase()) {
             country = allCountryKeys[i];
             break;
           }
