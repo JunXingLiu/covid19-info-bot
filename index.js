@@ -138,6 +138,55 @@ client.on("message", async (message) => {
         `Cannot find the province of ${prov} in Canada. Please enter -local [province]`
       );
     }
+  } else if (cmd === "china") {
+    const msg = await message.channel.send("Searching");
+    let prov = args.join(" ");
+    let getChinaCovidCases = async () => {
+      try {
+        let localReponse = await axios({
+          method: "GET",
+          url: localEndPoint,
+          headers: localHeaders,
+          params: {
+            country: "China",
+          },
+        });
+        let provinceData = localReponse.data.data.covid19Stats;
+        for (i = 0; i < provinceData.length; i++) {
+          if (
+            provinceData[i]["province"].toLowerCase() === prov.toLowerCase()
+          ) {
+            return provinceData[i];
+          }
+        }
+        return false;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    let {
+      lastUpdate,
+      keyId,
+      confirmed,
+      deaths,
+      recovered,
+    } = await getChinaCovidCases();
+    if (
+      lastUpdate !== undefined &&
+      keyId !== undefined &&
+      confirmed !== undefined &&
+      deaths !== undefined &&
+      recovered !== undefined
+    ) {
+      msg.edit(
+        `${keyId}: As of ${lastUpdate}\nConfirmed: ${confirmed}\nDeaths: ${deaths}\nRecovered: ${recovered}`
+      );
+    } else {
+      msg.edit(
+        `Cannot find the province of ${prov} in China. Please enter -china [province]`
+      );
+    }
   }
 });
 
