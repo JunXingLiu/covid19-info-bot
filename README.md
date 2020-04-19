@@ -12,7 +12,7 @@ Supports:
 
 ![In Action](https://i.imgur.com/GP7ROGj.png)
 
--joke : does not require parameter, returns a random joke TTS
+-joke : does not require parameter, returns a random joke (Text-To-Speech)
 ![In Action](https://i.imgur.com/P5W5GfC.png)
 
 -local [province] : return data from specified province in Canada
