@@ -11,8 +11,12 @@ Supports:
 
 -local [province] : return data from specified province in Canada
 
-Data used: https://github.com/pomber/covid19/, https://raw.githubusercontent.com/pomber/covid19/master/docs/timeseries.json
+Data used: https://github.com/pomber/covid19/, https://raw.githubusercontent.com/pomber/covid19/master/docs/timeseries.json, https://rapidapi.com/KishCom/api/covid-19-coronavirus-statistics
 
 
 ![In Action](https://i.imgur.com/GP7ROGj.png)
+
+![In Action](https://i.imgur.com/P5W5GfC.png)
+
+![In Action](https://i.imgur.com/avcrn4n.png)
 
