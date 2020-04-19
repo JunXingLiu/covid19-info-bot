@@ -9,6 +9,7 @@ Data used: https://github.com/pomber/covid19/, https://raw.githubusercontent.com
 Supports:
 
 -covid19 [country] : returns data from specified country
+
 ![In Action](https://i.imgur.com/GP7ROGj.png)
 
 -joke : does not require parameter, returns a random joke TTS
