@@ -2,15 +2,23 @@ const { Client } = require("discord.js");
 const { config } = require("dotenv");
 const axios = require("axios");
 
+config({
+  path: __dirname + "/.env",
+});
+
 const endPoint = "https://pomber.github.io/covid19/timeseries.json";
 const jokeEndPoint = "https://icanhazdadjoke.com/slack";
+const localEndPoint =
+  "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats";
+
+const localHeaders = {
+  "content-type": "application/octet-stream",
+  "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com",
+  "x-rapidapi-key": process.env.COVID19_TOKEN,
+};
 
 const client = new Client({
   disableEveryone: true,
-});
-
-config({
-  path: __dirname + "/.env",
 });
 
 client.on("ready", () => {
@@ -81,6 +89,55 @@ client.on("message", async (message) => {
     };
     let joke = await getJoke();
     message.channel.send(joke, { tts: true });
+  } else if (cmd === "local") {
+    const msg = await message.channel.send("Searching");
+    let prov = args.join(" ");
+    let getCovidDataLocal = async () => {
+      try {
+        let localReponse = await axios({
+          method: "GET",
+          url: localEndPoint,
+          headers: localHeaders,
+          params: {
+            country: "Canada",
+          },
+        });
+        let provinceData = localReponse.data.data.covid19Stats;
+        for (i = 0; i < provinceData.length; i++) {
+          if (
+            provinceData[i]["province"].toLowerCase() === prov.toLowerCase()
+          ) {
+            return provinceData[i];
+          }
+        }
+        return false;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    let {
+      lastUpdate,
+      keyId,
+      confirmed,
+      deaths,
+      recovered,
+    } = await getCovidDataLocal();
+    if (
+      lastUpdate !== undefined &&
+      keyId !== undefined &&
+      confirmed !== undefined &&
+      deaths !== undefined &&
+      recovered !== undefined
+    ) {
+      msg.edit(
+        `${keyId}: As of ${lastUpdate}\nConfirmed: ${confirmed}\nDeaths: ${deaths}\nRecovered: ${recovered}`
+      );
+    } else {
+      msg.edit(
+        `Cannot find the province of ${prov} in Canada. Please enter -local [province]`
+      );
+    }
   }
 });
 
