@@ -4,7 +4,6 @@ This project was built using NodeJS and Discord.js
 
 Data used: https://github.com/pomber/covid19/, https://raw.githubusercontent.com/pomber/covid19/master/docs/timeseries.json, https://rapidapi.com/KishCom/api/covid-19-coronavirus-statistics
 
-[Try it in your discord](https://discordapp.com/api/oauth2/authorize?client_id=699338637816365106&permissions=2048&scope=bot)
 
 Supports:
 
